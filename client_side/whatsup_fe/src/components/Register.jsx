@@ -5,8 +5,6 @@ import { useState } from "react";
 const Register = () => {
   const url = "http://localhost:3001/users/register";
   const [data, setData] = useState({
-    firstName: "",
-    lastName: "",
     email: "",
     password: "",
   });
@@ -48,38 +46,13 @@ const Register = () => {
         <Container className={"p-3"}>
           <Row>
             <Col lg={3} className={"m-1"}>
-              <Form.Label>First Name</Form.Label>
-            </Col>
-            <Col lg={6} className={"m-1"}>
-              <Form.Control
-                id="firstName"
-                onChange={(e) => handleChange(e)}
-                // value={data.firstName}
-                placeholder="First name"
-              />
-
-              {/* <i class="fa fa-exclamation-lg " style={{ color: "red" }}></i> */}
-            </Col>
-            <Col lg={3} className={"m-1"}>
-              <Form.Label>Last Name</Form.Label>
-            </Col>
-            <Col lg={6} className={"m-1"}>
-              <Form.Control
-                id="lastName"
-                onChange={(e) => handleChange(e)}
-                // value={data.lastName}
-                placeholder="Last name"
-              />
-            </Col>
-
-            <Col lg={3} className={"m-1"}>
               <Form.Label>Email address</Form.Label>
             </Col>
 
             <Col lg={6} className={"m-1"}>
               <Form.Control
                 id="email"
-                onChange={handleChange}
+                onChange={(e) => handleChange(e)}
                 // value={data.email}
                 type="email"
                 placeholder="Enter email"
@@ -99,12 +72,6 @@ const Register = () => {
                 placeholder="Enter password"
               />
             </Col>
-            {/* <Col lg={3} className={"m-1"}>
-              <Form.Label>Password</Form.Label>
-            </Col>
-            <Col lg={6} className={"m-1"}>
-              <Form.Control id="firstName" onChange={(e) => handleChange(e)} value={data.firstName} type="password" placeholder="Password" />
-            </Col> */}
           </Row>
           <Row>
             <Col lg={9} style={{ textAlign: "end", margin: "5px" }}>
