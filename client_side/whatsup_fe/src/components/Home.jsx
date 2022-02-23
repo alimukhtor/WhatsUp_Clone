@@ -1,4 +1,5 @@
 import React from "react";
+import MyProfile from "./MyProfile";
 import NavBar from "./NavBar";
 
 const Home = () => {
@@ -6,6 +7,7 @@ const Home = () => {
     <div>
       <NavBar />
       Main Page
+      <MyProfile />
     </div>
   );
 };
