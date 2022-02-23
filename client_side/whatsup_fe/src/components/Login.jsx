@@ -19,7 +19,11 @@ const Login = () => {
       body: JSON.stringify(data),
     }).then((response) => {
       console.log(response);
-      if (response.status === 200) {
+      if (response.ok) {
+        setData({
+          email: "",
+          password: "",
+        });
         alert("Success");
       }
     });
@@ -33,11 +37,11 @@ const Login = () => {
     // return response.json();
   };
 
-  const handleChange = (e) => {
-    const newdata = { ...data };
-    newdata[e.target.id] = e.target.value;
-    setData(newdata);
-    console.log(newdata);
+  const handleInput = (fieldName, value) => {
+    setData({
+      ...data,
+      [fieldName]: value,
+    });
   };
 
   return (
@@ -51,7 +55,14 @@ const Login = () => {
             </Col>
 
             <Col lg={6} className={"m-1"}>
-              <Form.Control type="email" placeholder="Enter email" />
+              <Form.Control
+                type="email"
+                value={data.email}
+                onChange={(e) => {
+                  handleInput("password", e.target.value);
+                }}
+                placeholder="Enter email"
+              />
             </Col>
             {/* <Col lg={3} className={"m-1"}>
               <Form.Label>Password</Form.Label>
@@ -67,8 +78,10 @@ const Login = () => {
             <Col lg={6} className={"m-1"}>
               <Form.Control
                 id="password"
-                onChange={(e) => handleChange(e)}
-                // value={data.email}
+                onChange={(e) => {
+                  handleInput("password", e.target.value);
+                }}
+                value={data.password}
                 type="password"
                 placeholder="Enter password"
               />
