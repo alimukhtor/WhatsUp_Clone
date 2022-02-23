@@ -5,7 +5,6 @@ import NavBar from "./NavBar";
 const Home = () => {
   return (
     <div>
-      <NavBar />
       Main Page
       <MyProfile />
     </div>
