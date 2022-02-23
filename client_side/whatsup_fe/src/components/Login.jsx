@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FcGoogle } from "react-icons/fc";
 import { Form, Col, Row, Container, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 const Login = () => {
@@ -48,15 +49,14 @@ const Login = () => {
   return (
     <>
       <Form className="main-form" onSubmit={handleSubmit}>
-        <Container className={"p-3"}>
-        <h1 className="mb-5 text-light"><strong>Log in</strong></h1>
-          <Row>
-            <Col lg={3} className={"m-1"}>
+        <Container>
+          <Row className="d-flex justify-content-center">
+            <Col md={6}>
+            
+              <h1 className="mb-5 text-light"><strong>Log in</strong></h1>
               <Form.Label className="text-light">Email address</Form.Label>
-            </Col>
-
-            <Col lg={6} className={"m-1"}>
               <Form.Control
+                className="rounded-pill"
                 type="email"
                 placeholder="Enter email"
                 value={data.email}
@@ -64,13 +64,9 @@ const Login = () => {
                   handleInput("email", e.target.value);
                 }}
               />
-            </Col>
-            <Col lg={3} className={"m-1"}>
               <Form.Label className="text-light">Password</Form.Label>
-            </Col>
-
-            <Col lg={6} className={"m-1"}>
               <Form.Control
+                className="rounded-pill"
                 id="password"
                 value={data.password}
                 onChange={(e) => {
@@ -79,13 +75,18 @@ const Login = () => {
                 type="password"
                 placeholder="Enter password"
               />
-            </Col>
-          </Row>
-          <Row>
-            <Col lg={9} style={{ textAlign: "end", margin: "5px" }}>
-              <Button variant="success" type="submit">
+              <div className="mt-4 d-flex inline-block">
+              <Button variant="success" type="submit" className="mr-3 rounded-pill">
                 Sign in
               </Button>
+              <p className="mt-2 text-light" style={{ textDecoration: "underline" }}>Or</p>
+              <a href="http://localhost:3001/users/googleLogin">
+              <Button variant="light" type="submit" className=" ml-3 rounded-pill">
+                <FcGoogle style={{ fontSize: "25px" }}/>
+                Continue with Google
+              </Button>
+              </a>
+              </div>
             </Col>
           </Row>
         </Container>

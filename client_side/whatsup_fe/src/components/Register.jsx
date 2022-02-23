@@ -51,6 +51,7 @@ const Register = () => {
             </Col>
             <Col lg={6} className={"m-1"}>
               <Form.Control
+                className="rounded-pill"
                 id="email"
                 type="text"
                 placeholder="Enter username"
@@ -63,6 +64,7 @@ const Register = () => {
             </Col>
             <Col lg={6} className={"m-1"}>
               <Form.Control
+                className="rounded-pill"
                 type="email"
                 placeholder="Enter email"
                 value={data.email}
@@ -76,6 +78,7 @@ const Register = () => {
 
             <Col lg={6} className={"m-1"}>
               <Form.Control
+                className="rounded-pill"
                 id="password"
                 type="password"
                 placeholder="Enter password"
@@ -86,7 +89,7 @@ const Register = () => {
           </Row>
           <Row>
             <Col lg={9} style={{ textAlign: "end", margin: "5px" }}>
-              <Button variant="success" type="submit">
+              <Button variant="success" type="submit" className="rounded-pill">
                 Sign Up
               </Button>
             </Col>

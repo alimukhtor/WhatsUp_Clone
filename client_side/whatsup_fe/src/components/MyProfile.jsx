@@ -3,12 +3,13 @@ import { Container, Row, Col, ListGroup, Form, Modal, Button } from "react-boots
 import { BsFillHddStackFill } from "react-icons/bs";
 import logo from "./assets/photo.png";
 const MyProfile = () => {
-  const url = "http://localhost:3001/users/me";
 
+  // *************** USER IMPLEMENTATION ****************
+  const url = "http://localhost:3001/users/me";
   const [data, setData] = useState([]);
   const [smShow, setSmShow] = useState(false);
 
-  const fetchProfile = async (e) => {
+  const fetchProfile = async () => {
     const token = localStorage.getItem("accessToken");
     const response = await fetch(url, {
       method: "GET",
@@ -27,6 +28,27 @@ const MyProfile = () => {
   useEffect(() => {
     fetchProfile();
   }, []);
+
+
+
+  // ********************* SEARCH BY USERNAMES ****************
+  const [inputValue, setInputValue] = useState('')
+
+  const searchUsers =async({inputValue})=> {
+    const response = await fetch(`http://localhost:3001/users?q=${inputValue}`)
+    if(response.ok){
+      const data = await response.json()
+      console.log("data:",data);
+      setInputValue(data)
+    }
+  }
+
+  useEffect(()=> {
+    searchUsers()
+  }, [])
+
+
+
 
   return (
     <div style={{ backgroundColor: "#181818" }}>
@@ -70,6 +92,8 @@ const MyProfile = () => {
                 type="search"
                 className="rounded-pill mt-4 ml-3"
                 placeholder="search..."
+                value={inputValue}
+                onChange={(e)=> setInputValue(e.target.value)}
               />
             </div>
             <ListGroup className="rounded-pill">
@@ -81,7 +105,7 @@ const MyProfile = () => {
             }
 
           <Col md={8} style={{ backgroundColor: "#0F0F0F" }}>
-            <h1>WhatsUp!</h1>
+            <h1 className="text-light">WhatsUp!</h1>
           </Col>
         </Row>
       </Container>
