@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Form, Col, Row, Container, Button } from "react-bootstrap";
-import NavBar from "./NavBar";
 
 const Login = () => {
   const url = "http://localhost:3001/users/login";
@@ -46,8 +45,7 @@ const Login = () => {
 
   return (
     <>
-      <Form>
-        <NavBar />
+      <Form className="main-form">
         <Container className={"p-3"}>
           <Row>
             <Col lg={3} className={"m-1"}>
@@ -57,20 +55,13 @@ const Login = () => {
             <Col lg={6} className={"m-1"}>
               <Form.Control
                 type="email"
+                placeholder="Enter email"
                 value={data.email}
                 onChange={(e) => {
                   handleInput("password", e.target.value);
                 }}
-                placeholder="Enter email"
               />
             </Col>
-            {/* <Col lg={3} className={"m-1"}>
-              <Form.Label>Password</Form.Label>
-            </Col>
-            <Col lg={6} className={"m-1"}>
-              <Form.Control type="password" placeholder="Password" />
-            </Col> */}
-
             <Col lg={3} className={"m-1"}>
               <Form.Label>Password</Form.Label>
             </Col>
@@ -78,10 +69,10 @@ const Login = () => {
             <Col lg={6} className={"m-1"}>
               <Form.Control
                 id="password"
+                value={data.password}
                 onChange={(e) => {
                   handleInput("password", e.target.value);
                 }}
-                value={data.password}
                 type="password"
                 placeholder="Enter password"
               />
