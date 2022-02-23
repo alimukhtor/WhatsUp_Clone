@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Form, Col, Row, Container, Button } from "react-bootstrap";
-
+import { useNavigate } from "react-router-dom";
 const Login = () => {
   const url = "http://localhost:3001/users/login";
+  const navigate = useNavigate()
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -10,31 +11,32 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    }).then((response) => {
-      console.log(response);
+    console.log(data);
+    try {
+      let response = await fetch(url, {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-type": "application/json",
+        },
+      });
+
       if (response.ok) {
+        const users = await response.json()
+       localStorage.setItem("accessToken", users.accessToken)
+        navigate("/");
         setData({
           email: "",
           password: "",
         });
-        alert("Success");
+      } else {
+        alert("Something went wrong!")
       }
-    });
-    // const response = await fetch(url, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(data),
-    // });
-    // return response.json();
+    } catch (error) {
+      console.log(error);
+    }
   };
+
 
   const handleInput = (fieldName, value) => {
     setData({
@@ -45,11 +47,12 @@ const Login = () => {
 
   return (
     <>
-      <Form className="main-form">
+      <Form className="main-form" onSubmit={handleSubmit}>
         <Container className={"p-3"}>
+        <h1 className="mb-5 text-light"><strong>Log in</strong></h1>
           <Row>
             <Col lg={3} className={"m-1"}>
-              <Form.Label>Email address</Form.Label>
+              <Form.Label className="text-light">Email address</Form.Label>
             </Col>
 
             <Col lg={6} className={"m-1"}>
@@ -58,12 +61,12 @@ const Login = () => {
                 placeholder="Enter email"
                 value={data.email}
                 onChange={(e) => {
-                  handleInput("password", e.target.value);
+                  handleInput("email", e.target.value);
                 }}
               />
             </Col>
             <Col lg={3} className={"m-1"}>
-              <Form.Label>Password</Form.Label>
+              <Form.Label className="text-light">Password</Form.Label>
             </Col>
 
             <Col lg={6} className={"m-1"}>
@@ -80,8 +83,8 @@ const Login = () => {
           </Row>
           <Row>
             <Col lg={9} style={{ textAlign: "end", margin: "5px" }}>
-              <Button variant="dark" onClick={(e) => handleSubmit(e)}>
-                Login
+              <Button variant="success" type="submit">
+                Sign in
               </Button>
             </Col>
           </Row>
