@@ -1,23 +1,24 @@
 import { useState, useEffect } from "react";
-import { Container, Row, Col } from "react-bootstrap";
-
+import { Container, Row, Col, ListGroup, Form, Modal, Button } from "react-bootstrap";
+import { BsFillHddStackFill } from "react-icons/bs";
+import logo from "./assets/photo.png";
 const MyProfile = () => {
   const url = "http://localhost:3001/users/me";
-  const image_url =
-    "https://images.unsplash.com/photo-1474978528675-4a50a4508dc3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fHByb2ZpbGV8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60";
+
   const [data, setData] = useState([]);
+  const [smShow, setSmShow] = useState(false);
 
   const fetchProfile = async (e) => {
-    const token = localStorage.getItem("accessToken")
+    const token = localStorage.getItem("accessToken");
     const response = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer " + token
+        Authorization: "Bearer " + token,
       },
     });
     if (response.ok) {
-      const newData = await response.json()
+      const newData = await response.json();
       console.log(newData);
       setData(newData);
     }
@@ -28,72 +29,59 @@ const MyProfile = () => {
   }, []);
 
   return (
-    <div>
+    <div style={{ backgroundColor: "#181818" }}>
       <Container>
-        <Row>
-          <Col lg={4} style={{ backgroundColor: "grey", height: "100vh" }}>
+        <Row style={{ height: "95vh" }}>
+
             {
-             data && 
-                <>
-            <h5
-              style={{
-                backgroundColor: "#075e54",
-                width: "100%",
-                height: "60px",
-                padding: "10px",
-                margin: "5px",
-              }}
+              data &&
+          <Col md={4} style={{ backgroundColor: "#2B2B2B" }}>
+            <Modal
+              size="sm"
+              show={smShow}
+              onHide={() => setSmShow(false)}
+              aria-labelledby="example-modal-sizes-title-sm"
             >
-              Profile
-            </h5>
+              <Modal.Header closeButton>
+                <Modal.Title id="example-modal-sizes-title-sm">
+                  User Account
+                </Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <p className="text-muted">Username:</p>
+                <p className="text-dark">{data.username}</p>
+                <hr/>
+                <p className="text-muted">Email:</p>
+                <p className="text-dark">{data.email}</p>
+                <hr/>
+                <div className="d-flex justify-content-center">
+                <Button variant="secondary" className="rounded-pill">Sign Out</Button>
 
-            <div
-              style={{
-                padding: "20px",
-                marginLeft: "20px",
-                margin: "25px",
-                borderRadius: "50%",
-                width: "230px",
-                height: "230px",
-                backgroundImage: `url(${image_url})`,
-                justifyContent: "center",
-              }}
-            ></div>
-            <div
-              style={{
-                backgroundColor: "white",
-                width: "100%",
-                padding: "10px",
-                // margin: "10px",
-                height: "80px",
-                textAlign: "left",
-              }}
-            >
-              <h6 style={{ paddingLeft: "5px , margin:10px" }}>Your Name</h6>
-              <h6 style={{ paddingLeft: "5px , margin:10px" }}>{data.username}</h6>
+                </div>
+              </Modal.Body>
+            </Modal>
+            <div className="d-flex inline-block">
+              <BsFillHddStackFill
+               onClick={() => setSmShow(true)}
+                className="mt-4 text-light inline-block"
+                style={{ fontSize: "37px" }}
+              />
+              <Form.Control
+                type="search"
+                className="rounded-pill mt-4 ml-3"
+                placeholder="search..."
+              />
             </div>
-            <p style={{ width: "100%", padding: "5px" }}>
-              This is not your username or pin.This name would be visible to
-              your WhatsApp contants.
-            </p>
-
-            <div
-              style={{
-                backgroundColor: "white",
-                width: "100%",
-                padding: "10px",
-                // margin: "10px",
-                height: "80px",
-                textAlign: "left",
-              }}
-            >
-              <h6 style={{ paddingLeft: "5px , margin:10px" }}>About</h6>
-              <h6 style={{ paddingLeft: "5px , margin:10px" }}>
-                Hey there, I'm using WhatsApp
-              </h6>
-            </div>
-            </>
+            <ListGroup className="rounded-pill">
+              <ListGroup.Item className="text-danger mt-5">
+                No users yet!
+              </ListGroup.Item>
+            </ListGroup>
+          </Col>
             }
+
+          <Col md={8} style={{ backgroundColor: "#0F0F0F" }}>
+            <h1>WhatsUp!</h1>
           </Col>
         </Row>
       </Container>
