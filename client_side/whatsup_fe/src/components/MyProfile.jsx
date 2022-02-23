@@ -7,16 +7,24 @@ const MyProfile = () => {
   const image_url =
     "https://images.unsplash.com/photo-1474978528675-4a50a4508dc3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fHByb2ZpbGV8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60";
   const [data, setData] = useState([]);
+
+  const fetchProfile = async (e) => {
+    const token = localStorage.getItem("accessToken")
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + token
+      },
+    });
+    if (response.ok) {
+      const newData = await response.json()
+      console.log(newData);
+      setData(newData);
+    }
+  };
+
   useEffect(() => {
-    const fetchProfile = async (e) => {
-      const response = fetch(url, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ data }),
-      });
-      const newData = await response.json;
-      setData(newData.Id);
-    };
     fetchProfile();
   }, []);
 
