@@ -24,7 +24,7 @@ const Login = () => {
       if (response.ok) {
         const users = await response.json()
        localStorage.setItem("accessToken", users.accessToken)
-        navigate("/");
+        navigate("/profile/me");
         setData({
           email: "",
           password: "",

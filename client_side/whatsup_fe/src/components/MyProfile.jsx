@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 
 const MyProfile = () => {
@@ -33,6 +32,9 @@ const MyProfile = () => {
       <Container>
         <Row>
           <Col lg={4} style={{ backgroundColor: "grey", height: "100vh" }}>
+            {
+             data && 
+                <>
             <h5
               style={{
                 backgroundColor: "#075e54",
@@ -68,7 +70,7 @@ const MyProfile = () => {
               }}
             >
               <h6 style={{ paddingLeft: "5px , margin:10px" }}>Your Name</h6>
-              <h6 style={{ paddingLeft: "5px , margin:10px" }}>Mansi</h6>
+              <h6 style={{ paddingLeft: "5px , margin:10px" }}>{data.username}</h6>
             </div>
             <p style={{ width: "100%", padding: "5px" }}>
               This is not your username or pin.This name would be visible to
@@ -90,6 +92,8 @@ const MyProfile = () => {
                 Hey there, I'm using WhatsApp
               </h6>
             </div>
+            </>
+            }
           </Col>
         </Row>
       </Container>
