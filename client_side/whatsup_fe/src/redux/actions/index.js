@@ -31,9 +31,7 @@ export const getSearchedUsers = (inputValue) => {
         try {
             let response = await fetch(`http://localhost:3001/users?q=${inputValue}`);
             if (response.ok) {
-                console.log("Response:", response);
                 let results = await response.json();
-                console.log(results);
                 dispatch({
                     type: ACTIONS.GET_SEARCHED_USERS,
                     payload: results
