@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 import { Container, Row, Col, ListGroup, Form, Modal, Button } from "react-bootstrap";
 import { BsFillHddStackFill } from "react-icons/bs";
+import { MdSend } from "react-icons/md";
 import logo from "./assets/photo.png";
+import {useSelector, useDispatch} from 'react-redux'
+import { getSearchedUsers } from "../redux/actions";
+
 const MyProfile = () => {
 
   // *************** USER IMPLEMENTATION ****************
@@ -32,20 +36,15 @@ const MyProfile = () => {
 
 
   // ********************* SEARCH BY USERNAMES ****************
+  const dispatch = useDispatch()
   const [inputValue, setInputValue] = useState('')
-
-  const searchUsers =async({inputValue})=> {
-    const response = await fetch(`http://localhost:3001/users?q=${inputValue}`)
-    if(response.ok){
-      const data = await response.json()
-      console.log("data:",data);
-      setInputValue(data)
-    }
-  }
+  const [getUsername, setUsername] = useState('')
+  const users = useSelector(state => state.users.inputValue)
+  const searchedUserName = useSelector(state => state.users.searchedUsers)
 
   useEffect(()=> {
-    searchUsers()
-  }, [])
+    dispatch(getSearchedUsers(inputValue));
+  }, [inputValue])
 
 
 
@@ -54,10 +53,10 @@ const MyProfile = () => {
     <div style={{ backgroundColor: "#181818" }}>
       <Container>
         <Row style={{ height: "95vh" }}>
+          <Col md={4} style={{ backgroundColor: "#2B2B2B" }}>
 
             {
               data &&
-          <Col md={4} style={{ backgroundColor: "#2B2B2B" }}>
             <Modal
               size="sm"
               show={smShow}
@@ -82,6 +81,7 @@ const MyProfile = () => {
                 </div>
               </Modal.Body>
             </Modal>
+            }
             <div className="d-flex inline-block">
               <BsFillHddStackFill
                onClick={() => setSmShow(true)}
@@ -96,16 +96,28 @@ const MyProfile = () => {
                 onChange={(e)=> setInputValue(e.target.value)}
               />
             </div>
+
+            {
+             searchedUserName && searchedUserName.map(usr=> (
+             <>
             <ListGroup className="rounded-pill">
-              <ListGroup.Item className="text-danger mt-5">
-                No users yet!
+              <ListGroup.Item className="text-info mt-5" style={{ backgroundColor: "#2B2B2B" }}>
+               <img src={logo} style={{ width: "40px", height:"40px" }} className="p-1 rounded-pill" /> 
+               {usr.username}
               </ListGroup.Item>
             </ListGroup>
-          </Col>
+            </>
+
+             ))
             }
 
-          <Col md={8} style={{ backgroundColor: "#0F0F0F" }}>
+            </Col>
+          <Col md={8} style={{ backgroundColor: "#0F0F0F" }} className='d-flex flex-column justify-content-between'>
             <h1 className="text-light">WhatsUp!</h1>
+            <div className="d-flex inline-block">
+            <Form.Control type="text" placeholder="Drop your mesage"  className="rounded-pill" style={{ backgroundColor: "#2B2B2B" }}/>
+            <Button variant="info" className="rounded-pill ml-2"><MdSend className="mb-1"/></Button>
+            </div>
           </Col>
         </Row>
       </Container>
