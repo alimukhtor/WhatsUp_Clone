@@ -48,3 +48,28 @@
   min-height: 96vh;
 }
 
+.ali{
+  background-color: #2B2B2B;
+  border:2px solid black;
+  color: white;
+  font-family: Century Gothic;
+  padding: 5px;
+  position: absolute;
+  left: 0px;
+  right: 0px;
+}
+
+.input-form{
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.message-form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 90vh;
+
+}
