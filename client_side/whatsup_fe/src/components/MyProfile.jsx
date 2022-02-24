@@ -14,10 +14,14 @@ import { CgSoftwareUpload } from "react-icons/cg";
 import logo from "./assets/photo.png";
 import { useSelector, useDispatch } from "react-redux";
 import { getSearchedUsers } from "../redux/actions";
-import { getPreviewsChat } from "../redux/actions";
+import SearchedUsers from "./SearchedUsers";
+import PreviewChat from "./PreviewChat";
+
 
 const MyProfile = () => {
+
   // *************** USER IMPLEMENTATION ****************
+  
   const url = "http://localhost:3001/users/me";
   const [data, setData] = useState([]);
   const [smShow, setSmShow] = useState(false);
@@ -43,8 +47,9 @@ const MyProfile = () => {
   }, []);
 
   // ********************* SEARCH BY USERNAMES ****************
-  const dispatch = useDispatch();
+
   const [inputValue, setInputValue] = useState("");
+  const dispatch = useDispatch();
   const searchedUserName = useSelector((state) => state.users.searchedUsers);
 
   useEffect(() => {
@@ -80,15 +85,11 @@ const MyProfile = () => {
 
   // ***************** END IF MESSAGE BOX *******************************
 
-  // ****************** FETCH PREVIEWS CHATS *************************
-  const prevChats = useSelector((state) => state.users.prevChat);
-  console.log("Previews chats", prevChats);
-  const token = localStorage.getItem("accessToken");
-  useEffect(() => {
-    dispatch(getPreviewsChat(token));
-  }, [token]);
+  // const setActiveChat = (chatId) => {
+  //   dispatch({ type: "SET_ACTIVE_CHAT", payload: chatId })
+  // }
 
-  // ***************** END OF PREVIEWS SECTION ******************8
+  const activeChat = useSelector( state => state.chats.selectedChat )
   return (
     <div style={{ backgroundColor: "#181818" }}>
       <Container>
@@ -130,6 +131,7 @@ const MyProfile = () => {
                 className="mt-4 text-light inline-block"
                 style={{ fontSize: "37px" }}
               />
+
               <Form.Control
                 type="search"
                 className="rounded-pill mt-4 ml-3"
@@ -138,40 +140,21 @@ const MyProfile = () => {
                 onChange={(e) => setInputValue(e.target.value)}
               />
             </div>
-
-            {searchedUserName &&
-              searchedUserName.map((usr) => (
-                <>
-                  <ListGroup className="rounded-pill">
-                    <ListGroup.Item
-                      className="text-info mt-5"
-                      style={{ backgroundColor: "#2B2B2B" }}
-                    >
-                      <img
-                        src={logo}
-                        style={{ width: "40px", height: "40px" }}
-                        className="p-1 rounded-pill"
-                        alt="logo"
-                      />
-                      {usr.username}
-                    </ListGroup.Item>
-                  </ListGroup>
-                </>
-              ))}
+            <PreviewChat inputValue={inputValue} />
+            <SearchedUsers
+              searchedUserName={searchedUserName}
+              inputValue={inputValue}
+            />
           </Col>
-          <Col
-            md={9}
-            style={{ backgroundColor: "#0F0F0F" }}
-            // className="d-flex flex-column justify-content-between"
-          >
-            {/* User Header */}
-            <div className="ali">
+          <Col md={9} style={{ backgroundColor: "#0F0F0F" }}>
+            <div className="main-header">
               <img
                 src={logo}
                 style={{ width: "40px", height: "40px" }}
                 className="p-1 rounded-pill"
                 alt="logo"
               />
+              <h1>{activeChat}</h1>
             </div>
             {/* MESSAGE BOX */}
             <ListGroup className="message-form">

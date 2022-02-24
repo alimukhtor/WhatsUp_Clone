@@ -1,5 +1,6 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
+import setActiveChatReducer from '../reducer/setActiveChatReducer'
 import userReducer from '../reducer/userReducer'
 
 
@@ -12,11 +13,15 @@ export const initialState = {
     users: {
         prevChat: [],
         searchedUsers:[]
+    },
+    chats:{
+        selectedChat:[]
     }
 }
 
 const rootReducer = combineReducers({
     users: userReducer,
+    chats: setActiveChatReducer
 })
 
 
