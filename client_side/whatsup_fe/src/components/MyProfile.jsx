@@ -21,6 +21,8 @@ const MyProfile = () => {
   const url = "http://localhost:3001/users/me";
   const [data, setData] = useState([]);
   const [smShow, setSmShow] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null)
+  const [imageSrc, setImageSrc] = useState(null)
 
   const fetchProfile = async () => {
     const token = localStorage.getItem("accessToken");
@@ -169,8 +171,9 @@ const MyProfile = () => {
                   style={{ backgroundColor: "#2B2B2B" }}
                 />
                 <Button variant="info" className="rounded-pill ml-2">
-                  <MdSend className="mb-1" />
-                </Button>
+                  <MdSend className="mb-1"  />
+                
+    </Button>
                 <Button
                   variant=""
                   className="rounded-pill text-light position-absolute mt-n1"
