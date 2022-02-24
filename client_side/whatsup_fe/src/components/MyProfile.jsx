@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Container, Row, Col, ListGroup, Form, Modal, Button } from "react-bootstrap";
 import { BsFillHddStackFill } from "react-icons/bs";
 import { MdSend } from "react-icons/md";
+import { CgSoftwareUpload } from "react-icons/cg";
 import logo from "./assets/photo.png";
 import {useSelector, useDispatch} from 'react-redux'
 import { getSearchedUsers } from "../redux/actions";
@@ -114,9 +115,10 @@ const MyProfile = () => {
             </Col>
           <Col md={8} style={{ backgroundColor: "#0F0F0F" }} className='d-flex flex-column justify-content-between'>
             <h1 className="text-light">WhatsUp!</h1>
-            <div className="d-flex inline-block">
-            <Form.Control type="text" placeholder="Drop your mesage"  className="rounded-pill" style={{ backgroundColor: "#2B2B2B" }}/>
+            <div className="d-flex inline-block position-relative">
+            <Form.Control type="text" placeholder="Drop your mesage"  className="rounded-pill text-light" style={{ backgroundColor: "#2B2B2B" }}/>
             <Button variant="info" className="rounded-pill ml-2"><MdSend className="mb-1"/></Button>
+            <Button variant="" className="rounded-pill text-light position-absolute mt-n1"  style={{ left: "624px", fontSize:"20px", boxShadow:"none"}}><CgSoftwareUpload className="mb-1"/></Button>
             </div>
           </Col>
         </Row>
