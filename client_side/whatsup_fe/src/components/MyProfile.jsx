@@ -7,13 +7,14 @@ import {
   Form,
   Modal,
   Button,
+  Image,
 } from "react-bootstrap";
 import { BsFillHddStackFill } from "react-icons/bs";
 import { MdSend } from "react-icons/md";
 import { CgSoftwareUpload } from "react-icons/cg";
 import logo from "./assets/photo.png";
 import { useSelector, useDispatch } from "react-redux";
-import { getSearchedUsers } from "../redux/actions";
+import { editingMyProfile, getSearchedUsers } from "../redux/actions";
 
 const MyProfile = () => {
   // *************** USER IMPLEMENTATION ****************
@@ -50,6 +51,7 @@ const MyProfile = () => {
 
   useEffect(() => {
     dispatch(getSearchedUsers(inputValue));
+    dispatch(editingMyProfile());
   }, [inputValue]);
 
   return (
@@ -107,7 +109,7 @@ const MyProfile = () => {
                       className="text-info mt-5"
                       style={{ backgroundColor: "#2B2B2B" }}
                     >
-                      <img
+                      <Image
                         src={logo}
                         style={{ width: "40px", height: "40px" }}
                         className="p-1 rounded-pill"
@@ -132,24 +134,24 @@ const MyProfile = () => {
               />
             </div>
             {/* MESSAGE BOX */}
-              <ListGroup className="message-form">
-                <ListGroup.Item
-                  className="text-info mt-5"
-                  style={{ backgroundColor: "#2B2B2B" }}
-                >
-                  <img
-                    src={logo}
-                    style={{ width: "40px", height: "40px" }}
-                    className="p-1 rounded-pill"
-                  />
-                  <strong>SenderName</strong>
-                  <span className="mx-1"> | </span>
-                  <span>Text</span>
-                  <span className="ml-2" style={{ fontSize: "0.7rem" }}>
-                    {/* {new Date(message.timestamp).toLocaleTimeString("en-US")} */}
-                  </span>
-                </ListGroup.Item>
-              </ListGroup>
+            <ListGroup className="message-form">
+              <ListGroup.Item
+                className="text-info mt-5"
+                style={{ backgroundColor: "#2B2B2B" }}
+              >
+                <img
+                  src={logo}
+                  style={{ width: "40px", height: "40px" }}
+                  className="p-1 rounded-pill"
+                />
+                <strong>SenderName</strong>
+                <span className="mx-1"> | </span>
+                <span>Text</span>
+                <span className="ml-2" style={{ fontSize: "0.7rem" }}>
+                  {/* {new Date(message.timestamp).toLocaleTimeString("en-US")} */}
+                </span>
+              </ListGroup.Item>
+            </ListGroup>
 
             {/* MESSAGE SEND INPUT */}
 

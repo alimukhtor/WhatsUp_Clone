@@ -1,25 +1,31 @@
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
-import thunk from 'redux-thunk'
-import userReducer from '../reducer/userReducer'
-
+import { createStore, combineReducers, applyMiddleware, compose } from "redux";
+import thunk from "redux-thunk";
+import userReducer from "../reducer/userReducer";
 
 // ************** REDUX-THUNK MIDDLEWARE **************
 // window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
 
-const composeThatAlwaysWorks = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+const composeThatAlwaysWorks =
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export const initialState = {
-    users: {
-        data: [],
-        searchedUsers:[]
-    }
-}
+  users: {
+    data: [],
+    searchedUsers: [],
+  },
+  myProfile: {
+    element: [],
+  },
+};
 
 const rootReducer = combineReducers({
-    users: userReducer,
-})
+  users: userReducer,
+});
 
+const storeConfig = createStore(
+  rootReducer,
+  initialState,
+  composeThatAlwaysWorks(applyMiddleware(thunk))
+);
 
-const storeConfig = createStore(rootReducer, initialState, composeThatAlwaysWorks(applyMiddleware(thunk)))
-
-export default storeConfig
+export default storeConfig;
