@@ -14,6 +14,7 @@ import { CgSoftwareUpload } from "react-icons/cg";
 import logo from "./assets/photo.png";
 import { useSelector, useDispatch } from "react-redux";
 import { getSearchedUsers } from "../redux/actions";
+import {useNavigate} from 'react-router-dom'
 
 const MyProfile = () => {
   // *************** USER IMPLEMENTATION ****************
@@ -40,6 +41,12 @@ const MyProfile = () => {
   useEffect(() => {
     fetchProfile();
   }, []);
+
+  const history= useNavigate()
+  const logout =()=>{
+    localStorage.clear()
+    history("/login")
+  }
 
   // ********************* SEARCH BY USERNAMES ****************
   const dispatch = useDispatch();
@@ -77,7 +84,7 @@ const MyProfile = () => {
                   <p className="text-dark">{data.email}</p>
                   <hr />
                   <div className="d-flex justify-content-center">
-                    <Button variant="secondary" className="rounded-pill">
+                    <Button variant="secondary" className="rounded-pill" onClick={logout}>
                       Sign Out
                     </Button>
                   </div>
