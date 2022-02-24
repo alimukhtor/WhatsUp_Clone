@@ -14,6 +14,7 @@ import { CgSoftwareUpload } from "react-icons/cg";
 import logo from "./assets/photo.png";
 import { useSelector, useDispatch } from "react-redux";
 import { getSearchedUsers } from "../redux/actions";
+import { getPreviewsChat } from "../redux/actions";
 
 const MyProfile = () => {
   // *************** USER IMPLEMENTATION ****************
@@ -44,20 +45,57 @@ const MyProfile = () => {
   // ********************* SEARCH BY USERNAMES ****************
   const dispatch = useDispatch();
   const [inputValue, setInputValue] = useState("");
-  const [getUsername, setUsername] = useState("");
-  const users = useSelector((state) => state.users.inputValue);
   const searchedUserName = useSelector((state) => state.users.searchedUsers);
 
   useEffect(() => {
     dispatch(getSearchedUsers(inputValue));
   }, [inputValue]);
 
+  // ******************** MESSAGE BOX **********************
+
+  const [username, setUsername] = useState("");
+  const [content, setContent] = useState({
+    text: "",
+    media: "",
+  });
+
+  const handleMessageSubmit = (e) => {
+    e.preventDefault();
+    const newMessage = {
+      content: {
+        text: content.text,
+        media: content.media,
+      },
+      sender: username,
+      timestamp: Date.now(),
+    };
+  };
+
+  const handleChange = (fieldName, value) => {
+    setContent({
+      ...content,
+      [fieldName]: value,
+    });
+  };
+
+  // ***************** END IF MESSAGE BOX *******************************
+
+  // ****************** FETCH PREVIEWS CHATS *************************
+  const prevChats = useSelector((state) => state.users.prevChat);
+  console.log("Previews chats", prevChats);
+  const token = localStorage.getItem("accessToken");
+  useEffect(() => {
+    dispatch(getPreviewsChat(token));
+  }, [token]);
+
+  // ***************** END OF PREVIEWS SECTION ******************8
   return (
     <div style={{ backgroundColor: "#181818" }}>
       <Container>
         <Row style={{ height: "95vh" }}>
-          <Col md={4} style={{ backgroundColor: "#2B2B2B" }}>
+          <Col md={3} style={{ backgroundColor: "#2B2B2B" }}>
             {data && (
+              // ************************** MODAL ********************************
               <Modal
                 size="sm"
                 show={smShow}
@@ -83,6 +121,8 @@ const MyProfile = () => {
                   </div>
                 </Modal.Body>
               </Modal>
+
+              // ******************************* END OF MODAL *************************8
             )}
             <div className="d-flex inline-block">
               <BsFillHddStackFill
@@ -111,6 +151,7 @@ const MyProfile = () => {
                         src={logo}
                         style={{ width: "40px", height: "40px" }}
                         className="p-1 rounded-pill"
+                        alt="logo"
                       />
                       {usr.username}
                     </ListGroup.Item>
@@ -119,7 +160,7 @@ const MyProfile = () => {
               ))}
           </Col>
           <Col
-            md={8}
+            md={9}
             style={{ backgroundColor: "#0F0F0F" }}
             // className="d-flex flex-column justify-content-between"
           >
@@ -129,37 +170,43 @@ const MyProfile = () => {
                 src={logo}
                 style={{ width: "40px", height: "40px" }}
                 className="p-1 rounded-pill"
+                alt="logo"
               />
             </div>
             {/* MESSAGE BOX */}
-              <ListGroup className="message-form">
-                <ListGroup.Item
-                  className="text-info mt-5"
-                  style={{ backgroundColor: "#2B2B2B" }}
-                >
-                  <img
-                    src={logo}
-                    style={{ width: "40px", height: "40px" }}
-                    className="p-1 rounded-pill"
-                  />
-                  <strong>SenderName</strong>
-                  <span className="mx-1"> | </span>
-                  <span>Text</span>
-                  <span className="ml-2" style={{ fontSize: "0.7rem" }}>
-                    {/* {new Date(message.timestamp).toLocaleTimeString("en-US")} */}
-                  </span>
-                </ListGroup.Item>
-              </ListGroup>
+            <ListGroup className="message-form">
+              <ListGroup.Item
+                className="text-info mt-5"
+                style={{ backgroundColor: "#2B2B2B" }}
+              >
+                <img
+                  src={logo}
+                  style={{ width: "40px", height: "40px" }}
+                  className="p-1 rounded-pill"
+                  alt="logo"
+                />
+                <strong>SenderName</strong>
+                <span className="mx-1"> | </span>
+                <span>Text</span>
+                <span className="ml-2" style={{ fontSize: "0.7rem" }}>
+                  {/* {new Date(message.timestamp).toLocaleTimeString("en-US")} */}
+                </span>
+              </ListGroup.Item>
+            </ListGroup>
 
             {/* MESSAGE SEND INPUT */}
 
-            <Form className="input-form">
+            <Form className="input-form" onSubmit={handleMessageSubmit}>
               <div className="d-flex inline-block position-relative">
                 <Form.Control
                   type="text"
                   placeholder="Drop your mesage"
                   className="rounded-pill text-light"
                   style={{ backgroundColor: "#2B2B2B" }}
+                  value={content.text}
+                  onChange={(e) => {
+                    handleChange("text", e.target.value);
+                  }}
                 />
                 <Button variant="info" className="rounded-pill ml-2">
                   <MdSend className="mb-1" />
@@ -167,7 +214,7 @@ const MyProfile = () => {
                 <Button
                   variant=""
                   className="rounded-pill text-light position-absolute mt-n1"
-                  style={{ left: "665px", fontSize: "20px", boxShadow: "none" }}
+                  style={{ left: "750px", fontSize: "20px", boxShadow: "none" }}
                 >
                   <CgSoftwareUpload className="mb-1" />
                 </Button>
