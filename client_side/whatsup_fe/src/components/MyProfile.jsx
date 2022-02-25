@@ -85,11 +85,8 @@ const MyProfile = () => {
 
   // ***************** END IF MESSAGE BOX *******************************
 
-  // const setActiveChat = (chatId) => {
-  //   dispatch({ type: "SET_ACTIVE_CHAT", payload: chatId })
-  // }
-
   const activeChat = useSelector( state => state.chats.selectedChat )
+
   return (
     <div style={{ backgroundColor: "#181818" }}>
       <Container>
@@ -147,14 +144,14 @@ const MyProfile = () => {
             />
           </Col>
           <Col md={9} style={{ backgroundColor: "#0F0F0F" }}>
-            <div className="main-header">
+            <div className="main-header d-flex inline-block">
               <img
                 src={logo}
                 style={{ width: "40px", height: "40px" }}
                 className="p-1 rounded-pill"
                 alt="logo"
               />
-              <h1>{activeChat}</h1>
+              <h1 className="mt-2" style={{fontSize:'20px' }}>{activeChat}</h1>
             </div>
             {/* MESSAGE BOX */}
             <ListGroup className="message-form">
