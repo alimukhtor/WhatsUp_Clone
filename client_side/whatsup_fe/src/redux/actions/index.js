@@ -1,14 +1,24 @@
 export const ACTIONS = {
     GET_SEARCHED_USERS: 'GET_SEARCHED_USERS',
     GET_PREV_CHATS:'GET_PREV_CHATS',
-    SET_ACTIVE_CHAT:'SET_ACTIVE_CHAT'
+    SET_ACTIVE_CHAT:'SET_ACTIVE_CHAT',
+    SET_SEARCHED_USERS:'SET_SEARCHED_USERS'
 }
 
-export const setActiveChats = (chatId) => {
+export const selectSearchedUser =(username)=> {
+    return async(dispatch)=> {
+        dispatch({
+            type:ACTIONS.SET_SEARCHED_USERS,
+            payload:username
+        })
+    }
+}
+
+export const setActiveChats = (username) => {
     return async (dispatch) => {
       dispatch({
         type: ACTIONS.SET_ACTIVE_CHAT,
-        payload: chatId,
+        payload: username,
       });
     };
   };

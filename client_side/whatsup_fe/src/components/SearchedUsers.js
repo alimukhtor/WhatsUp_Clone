@@ -1,7 +1,20 @@
 import { ListGroup } from "react-bootstrap";
+import { useEffect } from "react";
 import logo from "./assets/photo.png";
+import { useDispatch } from "react-redux";
+import { selectSearchedUser } from "../redux/actions";
 
 const SearchedUsers = ({ searchedUserName, inputValue }) => {
+const dispatch = useDispatch()
+
+const setSearchedUser=(username)=> {
+  dispatch(selectSearchedUser(username))
+}
+
+
+useEffect(() => {
+  setSearchedUser();
+}, []);
   return (
     <>
       {inputValue &&
@@ -10,6 +23,7 @@ const SearchedUsers = ({ searchedUserName, inputValue }) => {
             <ListGroup.Item
               className="text-info mt-5"
               style={{ backgroundColor: "#2B2B2B" }}
+              onClick={()=> setSearchedUser(usr.username)}
             >
               <img
                 src={logo}

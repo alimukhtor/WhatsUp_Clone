@@ -86,6 +86,7 @@ const MyProfile = () => {
   // ***************** END IF MESSAGE BOX *******************************
 
   const activeChat = useSelector( state => state.chats.selectedChat )
+  const searchedUser = useSelector( state => state.users.selectedUser )
 
   return (
     <div style={{ backgroundColor: "#181818" }}>
@@ -152,6 +153,7 @@ const MyProfile = () => {
                 alt="logo"
               />
               <h1 className="mt-2" style={{fontSize:'20px' }}>{activeChat}</h1>
+              <h1 className="mt-2" style={{fontSize:'20px' }}>{searchedUser}</h1>
             </div>
             {/* MESSAGE BOX */}
             <ListGroup className="message-form">

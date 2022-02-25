@@ -4,7 +4,6 @@ import logo from "./assets/photo.png";
 import { useSelector, useDispatch } from "react-redux";
 import { getPreviewsChat } from "../redux/actions";
 import { setActiveChats } from "../redux/actions";
-import { MdTitle } from "react-icons/md";
 
 const PreviewChat = ({ inputValue }) => {
   // const [activeChat, setActiveChat] = useState('')

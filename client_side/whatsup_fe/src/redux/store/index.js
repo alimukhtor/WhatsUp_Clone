@@ -12,7 +12,8 @@ const composeThatAlwaysWorks = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || co
 export const initialState = {
     users: {
         prevChat: [],
-        searchedUsers:[]
+        searchedUsers:[],
+        selectedUser:[]
     },
     chats:{
         selectedChat:[]

@@ -12,8 +12,13 @@ const userReducer = (state = initialState.users, action)=> {
             return{
                 ...state,
                 prevChat:action.payload
-            }    
-            default:return state
+            }  
+        case ACTIONS.SET_SEARCHED_USERS:
+            return{
+                ...state,
+                selectedUser:action.payload
+            }      
+        default:return state
     }
 }
 
