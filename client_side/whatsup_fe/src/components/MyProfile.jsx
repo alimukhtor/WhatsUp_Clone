@@ -16,7 +16,6 @@ import logo from "./assets/photo.png";
 import { useSelector, useDispatch } from "react-redux";
 import { editingMyProfile, getSearchedUsers } from "../redux/actions";
 import { useNavigate } from "react-router-dom";
-import { getSearchedUsers } from "../redux/actions";
 import SearchedUsers from "./SearchedUsers";
 import PreviewChat from "./PreviewChat";
 
