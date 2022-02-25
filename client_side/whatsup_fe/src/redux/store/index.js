@@ -1,8 +1,6 @@
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
-import thunk from 'redux-thunk'
-import setActiveChatReducer from '../reducer/setActiveChatReducer'
-import userReducer from '../reducer/userReducer'
-
+import { createStore, combineReducers, applyMiddleware, compose } from "redux";
+import thunk from "redux-thunk";
+import userReducer from "../reducer/userReducer";
 
 // ************** REDUX-THUNK MIDDLEWARE **************
 // window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
