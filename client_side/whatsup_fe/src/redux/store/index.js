@@ -1,6 +1,9 @@
-import { createStore, combineReducers, applyMiddleware, compose } from "redux";
-import thunk from "redux-thunk";
-import userReducer from "../reducer/userReducer";
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
+import thunk from 'redux-thunk'
+import myProfileReducer from '../reducer/myProfileReducer';
+import setActiveChatReducer from '../reducer/setActiveChatReducer'
+import userReducer from '../reducer/userReducer'
+
 
 // ************** REDUX-THUNK MIDDLEWARE **************
 // window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
@@ -16,10 +19,16 @@ export const initialState = {
   myProfile: {
     element: [],
   },
+  chats :{
+      selectedChat: null,
+      list: []
+  }
 };
 
 const rootReducer = combineReducers({
   users: userReducer,
+  myProfile: myProfileReducer,
+  chats: setActiveChatReducer
 });
 
 const storeConfig = createStore(
