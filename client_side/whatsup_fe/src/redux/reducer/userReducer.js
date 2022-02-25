@@ -17,7 +17,12 @@ const userReducer = (state = initialState.users, action)=> {
             return{
                 ...state,
                 selectedUser:action.payload
-            }      
+            }   
+        case ACTIONS.SET_USER_INFO:
+            return{
+                ...state,
+                userInfo:action.payload
+            }       
         default:return state
     }
 }

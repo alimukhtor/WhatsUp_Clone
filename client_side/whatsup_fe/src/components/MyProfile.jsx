@@ -17,11 +17,9 @@ import { getSearchedUsers } from "../redux/actions";
 import SearchedUsers from "./SearchedUsers";
 import PreviewChat from "./PreviewChat";
 
-
 const MyProfile = () => {
-
   // *************** USER IMPLEMENTATION ****************
-  
+
   const url = "http://localhost:3001/users/me";
   const [data, setData] = useState([]);
   const [smShow, setSmShow] = useState(false);
@@ -85,9 +83,22 @@ const MyProfile = () => {
 
   // ***************** END IF MESSAGE BOX *******************************
 
-  const activeChat = useSelector( state => state.chats.selectedChat )
-  const searchedUser = useSelector( state => state.users.selectedUser )
+  const activeChat = useSelector((state) => state.chats.selectedChat);
+  const searchedUser = useSelector((state) => state.users.selectedUser);
+  const [selectedUser, setSelectedUser] = useState('');
+  const prevChats = useSelector((state) => state.users.prevChat);
 
+  // const recipient = useSelector(state => state.chats.list(c => c._id === activeChat).find( m => m._id !== prevChats._id))
+  const recipient = useSelector(state => state.chats.list)
+  console.log("Recipient", recipient);
+
+  useEffect( () => {
+    const fetchMessages = async () => {
+      //const response= await fetch(/chat/{activechat})
+      //dispatch({type: SET_HISTORY, payload: { chatId: activeChat, messages: response.messages } )
+    }
+    fetchMessages()
+  }, [activeChat])
   return (
     <div style={{ backgroundColor: "#181818" }}>
       <Container>
@@ -116,6 +127,9 @@ const MyProfile = () => {
                   <div className="d-flex justify-content-center">
                     <Button variant="secondary" className="rounded-pill">
                       Sign Out
+                    </Button>
+                    <Button variant="info" className="rounded-pill">
+                      Edit
                     </Button>
                   </div>
                 </Modal.Body>
@@ -152,8 +166,9 @@ const MyProfile = () => {
                 className="p-1 rounded-pill"
                 alt="logo"
               />
-              <h1 className="mt-2" style={{fontSize:'20px' }}>{activeChat}</h1>
-              <h1 className="mt-2" style={{fontSize:'20px' }}>{searchedUser}</h1>
+              <h1 className="mt-2" style={{ fontSize: "20px" }}>
+                {searchedUser}
+              </h1>
             </div>
             {/* MESSAGE BOX */}
             <ListGroup className="message-form">

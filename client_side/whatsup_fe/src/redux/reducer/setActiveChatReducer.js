@@ -7,8 +7,9 @@ const setActiveChatReducer =(state = initialState.chats, action)=> {
         case ACTIONS.SET_ACTIVE_CHAT:
           return {
             ...state,
-            selectedChat: [action.payload],
+            list: [action.payload],
           };
+        //case actions.set_history
         default: return state
     }
 }

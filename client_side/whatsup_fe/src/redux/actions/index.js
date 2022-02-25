@@ -2,7 +2,7 @@ export const ACTIONS = {
     GET_SEARCHED_USERS: 'GET_SEARCHED_USERS',
     GET_PREV_CHATS:'GET_PREV_CHATS',
     SET_ACTIVE_CHAT:'SET_ACTIVE_CHAT',
-    SET_SEARCHED_USERS:'SET_SEARCHED_USERS'
+    SET_SEARCHED_USERS:'SET_SEARCHED_USERS',
 }
 
 export const selectSearchedUser =(username)=> {
@@ -14,12 +14,30 @@ export const selectSearchedUser =(username)=> {
     }
 }
 
-export const setActiveChats = (username) => {
+
+export const setActiveChats = (token, chatId) => {
     return async (dispatch) => {
-      dispatch({
-        type: ACTIONS.SET_ACTIVE_CHAT,
-        payload: username,
-      });
+        try {
+            console.log("myToken", token);
+            console.log("chatId::", chatId);
+            const response = await fetch(`http://localhost:3001/chats/${chatId}`, {
+            method:"GET",
+            headers:{
+                    "Content-Type":"application/json",
+                    "Authorization":"Bearer " + token
+                }
+            })
+            if(response.ok){
+                const usersList = await response.json()
+                console.log("UserListasdasdsasd:", usersList)
+                dispatch({
+                    type: ACTIONS.GET_PREV_CHATS,
+                    payload: usersList
+                })
+            }
+        } catch (error) {
+            console.log(error);
+        }
     };
   };
   
@@ -36,9 +54,10 @@ export const getPreviewsChat = (token)=> {
             })
             if(response.ok){
                 const users = await response.json()
+                console.log(users);
                 dispatch({
                     type: ACTIONS.GET_PREV_CHATS,
-                    payload: users[0].members
+                    payload: users
                 })
             }
         } catch (error) {

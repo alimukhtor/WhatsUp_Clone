@@ -13,10 +13,27 @@ export const initialState = {
     users: {
         prevChat: [],
         searchedUsers:[],
-        selectedUser:[]
+        selectedUser:[],
     },
     chats:{
-        selectedChat:[]
+        selectedChat: "",
+        list: [
+            // {
+            //     _id: "123456789",
+            //     members: ["userId123", "userId456"],
+            //     messages: [] // GET /chats/:id
+            // },
+            // {
+            //     _id: "123456789",
+            //     members: ["userId123", "userId456"],
+            //     messages: []
+            // },
+            // {
+            //     _id: "123456789",
+            //     members: ["userId123", "userId456"],
+            //     messages: []
+            // },
+        ]
     }
 }
 
