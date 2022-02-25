@@ -8,7 +8,22 @@ const userReducer = (state = initialState.users, action)=> {
                 ...state,
                 searchedUsers:action.payload
             }
-            default:return state
+        case ACTIONS.GET_PREV_CHATS:
+            return{
+                ...state,
+                prevChat:action.payload
+            }  
+        case ACTIONS.SET_SEARCHED_USERS:
+            return{
+                ...state,
+                selectedUser:action.payload
+            }   
+        case ACTIONS.SET_USER_INFO:
+            return{
+                ...state,
+                userInfo:action.payload
+            }       
+        default:return state
     }
 }
 

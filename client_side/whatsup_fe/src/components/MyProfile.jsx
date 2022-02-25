@@ -16,9 +16,13 @@ import logo from "./assets/photo.png";
 import { useSelector, useDispatch } from "react-redux";
 import { editingMyProfile, getSearchedUsers } from "../redux/actions";
 import { useNavigate } from "react-router-dom";
+import { getSearchedUsers } from "../redux/actions";
+import SearchedUsers from "./SearchedUsers";
+import PreviewChat from "./PreviewChat";
 
 const MyProfile = () => {
   // *************** USER IMPLEMENTATION ****************
+
   const url = "http://localhost:3001/users/me";
   const [data, setData] = useState([]);
   const [smShow, setSmShow] = useState(false);
@@ -52,10 +56,9 @@ const MyProfile = () => {
   };
 
   // ********************* SEARCH BY USERNAMES ****************
-  const dispatch = useDispatch();
+
   const [inputValue, setInputValue] = useState("");
-  const [getUsername, setUsername] = useState("");
-  const users = useSelector((state) => state.users.inputValue);
+  const dispatch = useDispatch();
   const searchedUserName = useSelector((state) => state.users.searchedUsers);
 
   useEffect(() => {
@@ -63,12 +66,58 @@ const MyProfile = () => {
     dispatch(editingMyProfile());
   }, [inputValue]);
 
+  // ******************** MESSAGE BOX **********************
+
+  const [username, setUsername] = useState("");
+  const [content, setContent] = useState({
+    text: "",
+    media: "",
+  });
+
+  const handleMessageSubmit = (e) => {
+    e.preventDefault();
+    const newMessage = {
+      content: {
+        text: content.text,
+        media: content.media,
+      },
+      sender: username,
+      timestamp: Date.now(),
+    };
+  };
+
+  const handleChange = (fieldName, value) => {
+    setContent({
+      ...content,
+      [fieldName]: value,
+    });
+  };
+
+  // ***************** END IF MESSAGE BOX *******************************
+
+  const activeChat = useSelector((state) => state.chats.selectedChat);
+  const searchedUser = useSelector((state) => state.users.selectedUser);
+  const [selectedUser, setSelectedUser] = useState('');
+  const prevChats = useSelector((state) => state.users.prevChat);
+
+  // const recipient = useSelector(state => state.chats.list(c => c._id === activeChat).find( m => m._id !== prevChats._id))
+  const recipient = useSelector(state => state.chats.list)
+  console.log("Recipient", recipient);
+
+  useEffect( () => {
+    const fetchMessages = async () => {
+      //const response= await fetch(/chat/{activechat})
+      //dispatch({type: SET_HISTORY, payload: { chatId: activeChat, messages: response.messages } )
+    }
+    fetchMessages()
+  }, [activeChat])
   return (
     <div style={{ backgroundColor: "#181818" }}>
       <Container>
         <Row style={{ height: "95vh" }}>
-          <Col md={4} style={{ backgroundColor: "#2B2B2B" }}>
+          <Col md={3} style={{ backgroundColor: "#2B2B2B" }}>
             {data && (
+              // ************************** MODAL ********************************
               <Modal
                 size="sm"
                 show={smShow}
@@ -95,9 +144,14 @@ const MyProfile = () => {
                     >
                       Sign Out
                     </Button>
+                    <Button variant="info" className="rounded-pill">
+                      Edit
+                    </Button>
                   </div>
                 </Modal.Body>
               </Modal>
+
+              // ******************************* END OF MODAL *************************8
             )}
             <div className="d-flex inline-block">
               <BsFillHddStackFill
@@ -105,6 +159,7 @@ const MyProfile = () => {
                 className="mt-4 text-light inline-block"
                 style={{ fontSize: "37px" }}
               />
+
               <Form.Control
                 type="search"
                 className="rounded-pill mt-4 ml-3"
@@ -113,38 +168,23 @@ const MyProfile = () => {
                 onChange={(e) => setInputValue(e.target.value)}
               />
             </div>
-
-            {searchedUserName &&
-              searchedUserName.map((usr) => (
-                <>
-                  <ListGroup className="rounded-pill">
-                    <ListGroup.Item
-                      className="text-info mt-5"
-                      style={{ backgroundColor: "#2B2B2B" }}
-                    >
-                      <Image
-                        src={logo}
-                        style={{ width: "40px", height: "40px" }}
-                        className="p-1 rounded-pill"
-                      />
-                      {usr.username}
-                    </ListGroup.Item>
-                  </ListGroup>
-                </>
-              ))}
+            <PreviewChat inputValue={inputValue} />
+            <SearchedUsers
+              searchedUserName={searchedUserName}
+              inputValue={inputValue}
+            />
           </Col>
-          <Col
-            md={8}
-            style={{ backgroundColor: "#0F0F0F" }}
-            // className="d-flex flex-column justify-content-between"
-          >
-            {/* User Header */}
-            <div className="ali">
+          <Col md={9} style={{ backgroundColor: "#0F0F0F" }}>
+            <div className="main-header d-flex inline-block">
               <img
                 src={logo}
                 style={{ width: "40px", height: "40px" }}
                 className="p-1 rounded-pill"
+                alt="logo"
               />
+              <h1 className="mt-2" style={{ fontSize: "20px" }}>
+                {searchedUser}
+              </h1>
             </div>
             {/* MESSAGE BOX */}
             <ListGroup className="message-form">
@@ -156,6 +196,7 @@ const MyProfile = () => {
                   src={logo}
                   style={{ width: "40px", height: "40px" }}
                   className="p-1 rounded-pill"
+                  alt="logo"
                 />
                 <strong>SenderName</strong>
                 <span className="mx-1"> | </span>
@@ -168,13 +209,17 @@ const MyProfile = () => {
 
             {/* MESSAGE SEND INPUT */}
 
-            <Form className="input-form">
+            <Form className="input-form" onSubmit={handleMessageSubmit}>
               <div className="d-flex inline-block position-relative">
                 <Form.Control
                   type="text"
                   placeholder="Drop your mesage"
                   className="rounded-pill text-light"
                   style={{ backgroundColor: "#2B2B2B" }}
+                  value={content.text}
+                  onChange={(e) => {
+                    handleChange("text", e.target.value);
+                  }}
                 />
                 <Button variant="info" className="rounded-pill ml-2">
                   <MdSend className="mb-1" />
@@ -182,7 +227,7 @@ const MyProfile = () => {
                 <Button
                   variant=""
                   className="rounded-pill text-light position-absolute mt-n1"
-                  style={{ left: "665px", fontSize: "20px", boxShadow: "none" }}
+                  style={{ left: "750px", fontSize: "20px", boxShadow: "none" }}
                 >
                   <CgSoftwareUpload className="mb-1" />
                 </Button>
