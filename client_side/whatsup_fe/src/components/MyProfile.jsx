@@ -186,25 +186,6 @@ const MyProfile = () => {
               </h1>
             </div>
             {/* MESSAGE BOX */}
-            <ListGroup className="message-form">
-              <ListGroup.Item
-                className="text-info mt-5"
-                style={{ backgroundColor: "#2B2B2B" }}
-              >
-                <img
-                  src={logo}
-                  style={{ width: "40px", height: "40px" }}
-                  className="p-1 rounded-pill"
-                  alt="logo"
-                />
-                <strong>SenderName</strong>
-                <span className="mx-1"> | </span>
-                <span>Text</span>
-                <span className="ml-2" style={{ fontSize: "0.7rem" }}>
-                  {/* {new Date(message.timestamp).toLocaleTimeString("en-US")} */}
-                </span>
-              </ListGroup.Item>
-            </ListGroup>
 
             {/* MESSAGE SEND INPUT */}
 
